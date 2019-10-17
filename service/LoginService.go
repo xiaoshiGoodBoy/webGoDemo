@@ -3,6 +3,7 @@ package service
 
 import(
 	"GoDemo/goDao"
+	"GoDemo/pojo"
 	"database/sql"
 	"log"
 )
@@ -23,4 +24,8 @@ func RemoveUser(db *sql.DB,err error,id string) int {
 
 func ModifyUser(db *sql.DB, err error, id string, name string, password string) int {
 	return goDao.UpdateUser(db,err,id,name,password)
+}
+
+func FindUser(db *sql.DB, err error, id string) (pojo.Student){
+	return goDao.SelectUserById(db,err, id)
 }

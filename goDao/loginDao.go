@@ -1,6 +1,7 @@
 package goDao
 
 import (
+	"GoDemo/pojo"
 	"database/sql"
 	"fmt"
 	"log"
@@ -26,26 +27,36 @@ func databaseInit() (*sql.DB,error) {
 	fmt.Println("数据库连接： ",DBStr)
 	return sql.Open("mysql", DBStr)
 }
+*/
 
-func selectUserById(id int){
+func SelectUserById(db *sql.DB,err error, id string) (pojo.Student){
 	sqlStr := "select * from tab_user where id = ? "
 
-	SqlDB, err := databaseInit()
 	if err != nil{
 		fmt.Println("连接失败，错误原因：", err)
 	}
-	stmt,_ := SqlDB.Prepare(sqlStr)
-	rows, err := stmt.Query(id)
+	stmt,_ := db.Prepare(sqlStr)
+	rows,_ := stmt.Query(id)
 	if err != nil{
 		fmt.Println("查询异常，错误原因：", err)
 	}
 
+	var userid string
+	var loginName string
+	var userEmail string
+	var userPassword string
+
 	for rows.Next(){
 		//封装结构体
+		rows.Scan(&userid, &loginName, &userEmail, &userPassword)
+		fmt.Println("用户id：",userid , "--用户名：",loginName, "--用户邮箱：",userEmail,"--用户密码：", userPassword)
 	}
+	stuPojo := pojo.Student{userid, loginName, userEmail, userPassword}
 
+	log.Println("根据id查询执行完成！")
+	return stuPojo
 }
-*/
+
 
 func InsertData(db *sql.DB,err error,name string, password string){
 	if err != nil{

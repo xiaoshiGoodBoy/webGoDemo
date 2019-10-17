@@ -2,10 +2,10 @@ package pojo
 
 
 type Student struct {
-	id int
-	loginName string
-	userEmail string
-	userPassword string
+	Id string
+	LoginName string
+	UserEmail string
+	UserPassword string
 }
 
 type ResMap struct {
